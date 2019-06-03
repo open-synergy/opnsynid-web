@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright 2017 OpenSynergy Indonesia
+<!-- Copyright 2017-2019 OpenSynergy Indonesia
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
 
 <openerp>
@@ -24,6 +24,7 @@
         <form>
             <header>
                 <button name="action_active" string="Active" type="object" states="draft" class="oe_highlight"/>
+                <button name="action_reload" string="Reload" type="object" states="active"/>
                 <button name="action_draft" string="Draft" type="object" states="active"/>
                 <field name="state" widget="statusbar"/>
             </header>

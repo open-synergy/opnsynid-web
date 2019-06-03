@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright 2018 OpenSynergy Indonesia
+# Copyright 2018-2019 OpenSynergy Indonesia
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from openerp import models, fields, api
@@ -51,12 +51,18 @@ class TileCategory(models.Model):
     @api.multi
     def action_active(self):
         for categ in self:
-            categ.write(self._prepare_active_data())
+            categ.write(categ._prepare_active_data())
 
     @api.multi
     def action_draft(self):
         for categ in self:
-            categ.write(self._prepare_draft_data())
+            categ.write(categ._prepare_draft_data())
+
+    @api.multi
+    def action_reload(self):
+        for categ in self:
+            categ.window_action_id.write(categ._prepare_waction_reload())
+            categ.menu_id.write(categ._prepare_menu_reload())
 
     @api.multi
     def _prepare_active_data(self):
@@ -106,6 +112,18 @@ class TileCategory(models.Model):
         }
 
     @api.multi
+    def _prepare_waction_reload(self):
+        self.ensure_one()
+        return {
+            "name": self.name,
+            "domain": [
+                ('id', 'in', self.tile_ids.ids),
+                '|',
+                ('user_id', '=', False),
+                ('user_id', '=', self.env.user.id)]
+        }
+
+    @api.multi
     def _create_menu(self, window_action):
         self.ensure_one()
         obj_menu = self.env["ir.ui.menu"]
@@ -120,5 +138,13 @@ class TileCategory(models.Model):
             "name": self.name,
             "action": "ir.actions.act_window,%s" % window_action.id,
             "parent_id": parent_menu.id,
+            "groups_id": [(6, 0, self.group_ids.ids)],
+        }
+
+    @api.multi
+    def _prepare_menu_reload(self):
+        self.ensure_one()
+        return {
+            "name": self.name,
             "groups_id": [(6, 0, self.group_ids.ids)],
         }
