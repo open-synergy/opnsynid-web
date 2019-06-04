@@ -28,23 +28,33 @@
                 <button name="action_draft" string="Draft" type="object" states="active"/>
                 <field name="state" widget="statusbar"/>
             </header>
-            <group name="group_1" colspan="4" col="2">
-                <field name="name"/>
-            </group>
-            <notebook colspan="4">
-                <page name="tiles" string="Dashboard Tiles">
-                    <field name="tile_ids"/>
-                </page>
-                <page name="groups" string="Groups">
-                    <field name="group_ids"/>
-                </page>
-                <page name="technical" string="Technical">
-                    <group name="technical_1" colspan="4" col="2">
-                        <field name="window_action_id"/>
-                        <field name="menu_id"/>
-                    </group>
-                </page>
-            </notebook>
+            <sheet>
+                <div class="oe_right oe_button_box" style="width: 300px;" name="buttons">
+                    <button name="action_open_tile"
+                        string="Dashboard Tiles"
+                        type="object"
+                        class="oe_inline oe_stat_button"
+                        icon="fa-book"
+                    />
+                </div>
+                <group name="group_1" colspan="4" col="2">
+                    <field name="name"/>
+                </group>
+                <notebook colspan="4">
+                    <page name="tiles" string="Dashboard Tiles">
+                        <field name="tile_ids"/>
+                    </page>
+                    <page name="groups" string="Groups">
+                        <field name="group_ids"/>
+                    </page>
+                    <page name="technical" string="Technical">
+                        <group name="technical_1" colspan="4" col="2">
+                            <field name="window_action_id"/>
+                            <field name="menu_id"/>
+                        </group>
+                    </page>
+                </notebook>
+            </sheet>
         </form>
     </field>
 </record>

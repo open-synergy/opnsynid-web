@@ -65,6 +65,16 @@ class TileCategory(models.Model):
             categ.menu_id.write(categ._prepare_menu_reload())
 
     @api.multi
+    def action_open_tile(self):
+        self.ensure_one()
+        xml_id = "web_dashboard_tile.action_tree_dashboard_tile"
+        waction = self.env.ref(xml_id).read()[0]
+        waction["domain"] = [
+            ("id", "in", self.tile_ids.ids)
+        ]
+        return waction
+
+    @api.multi
     def _prepare_active_data(self):
         self.ensure_one()
         window_action = self._create_window_action()
