@@ -7,7 +7,10 @@ from openerp import models, fields, api
 
 class TileCategory(models.Model):
     _name = "tile.category"
-    _inherit = "tile.category"
+    _inherit = [
+        "tile.category",
+        "mail.thread",
+    ]
 
     cron_id = fields.Many2one(
         string="Cron",
