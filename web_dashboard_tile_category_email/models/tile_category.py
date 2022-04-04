@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 # Copyright 2018-2019 OpenSynergy Indonesia
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+# License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from openerp import models, fields, api
+from openerp import api, fields, models
 
 
 class TileCategory(models.Model):
@@ -45,8 +45,7 @@ class TileCategory(models.Model):
     @api.multi
     def _prepare_cron_data(self):
         self.ensure_one()
-        cron_name = "Email Digest: %s" % (
-            self.name)
+        cron_name = "Email Digest: %s" % (self.name)
         return {
             "name": cron_name,
             "user_id": self.env.user.id,
@@ -75,8 +74,8 @@ class TileCategory(models.Model):
             template = self.email_template_id
             # TODO: Use email.template send_mail method
             email_dict = obj_template.generate_email(
-                template_id=template.id, res_id=self.id)
+                template_id=template.id, res_id=self.id
+            )
             mail = obj_mail.create(email_dict)
-            mail.write(
-                {"recipient_ids": [(6, 0, self.recipient_partner_ids.ids)]})
+            mail.write({"recipient_ids": [(6, 0, self.recipient_partner_ids.ids)]})
             mail.send()

@@ -1,16 +1,15 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <!-- Copyright 2019 OpenSynergy Indonesia
-     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
-
+     License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). -->
 <openerp>
 <data>
 
 <menuitem
-    id="all_dashboard_menu"
-    name="Dashboards"
-    parent="mail.mail_feeds_main"
-    sequence="11"
-    />
+            id="all_dashboard_menu"
+            name="Dashboards"
+            parent="mail.mail_feeds_main"
+            sequence="11"
+        />
 
 
 </data>

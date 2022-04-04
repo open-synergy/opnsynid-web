@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 # Copyright 2018-2019 OpenSynergy Indonesia
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+# License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from openerp import models, fields, api
+from openerp import api, fields, models
 
 
 class TileCategory(models.Model):
@@ -69,9 +69,7 @@ class TileCategory(models.Model):
         self.ensure_one()
         xml_id = "web_dashboard_tile.action_tree_dashboard_tile"
         waction = self.env.ref(xml_id).read()[0]
-        waction["domain"] = [
-            ("id", "in", self.tile_ids.ids)
-        ]
+        waction["domain"] = [("id", "in", self.tile_ids.ids)]
         return waction
 
     @api.multi
@@ -105,8 +103,7 @@ class TileCategory(models.Model):
     @api.multi
     def _prepare_window_action(self):
         self.ensure_one()
-        view = self.env.ref(
-            "web_dashboard_tile.dashboard_tile_tile_kanban_view")
+        view = self.env.ref("web_dashboard_tile.dashboard_tile_tile_kanban_view")
         return {
             "name": self.name,
             "type": "ir.actions.act_window",
@@ -115,10 +112,11 @@ class TileCategory(models.Model):
             "view_mode": "kanban",
             "view_id": view.id,
             "domain": [
-                ('id', 'in', self.tile_ids.ids),
-                '|',
-                ('user_id', '=', False),
-                ('user_id', '=', self.env.user.id)]
+                ("id", "in", self.tile_ids.ids),
+                "|",
+                ("user_id", "=", False),
+                ("user_id", "=", self.env.user.id),
+            ],
         }
 
     @api.multi
@@ -127,10 +125,11 @@ class TileCategory(models.Model):
         return {
             "name": self.name,
             "domain": [
-                ('id', 'in', self.tile_ids.ids),
-                '|',
-                ('user_id', '=', False),
-                ('user_id', '=', self.env.user.id)]
+                ("id", "in", self.tile_ids.ids),
+                "|",
+                ("user_id", "=", False),
+                ("user_id", "=", self.env.user.id),
+            ],
         }
 
     @api.multi
@@ -142,8 +141,7 @@ class TileCategory(models.Model):
     @api.multi
     def _prepare_menu(self, window_action):
         self.ensure_one()
-        parent_menu = self.env.ref(
-            "web_dashboard_tile_category.all_dashboard_menu")
+        parent_menu = self.env.ref("web_dashboard_tile_category.all_dashboard_menu")
         return {
             "name": self.name,
             "action": "ir.actions.act_window,%s" % window_action.id,
